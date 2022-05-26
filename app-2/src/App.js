@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
@@ -22,5 +22,19 @@ function App() {
     </div>
   );
 }
+class Apps extends Component{
+constructor(){
+  super();
 
-export default App;
+  this.state={
+    foods: ['burger', 'pizza', 'salad', 'wings', 'steak']
+  };
+}
+render(){
+  let foodsToDisplay = this.state.foods.map((element, index)=>{
+    return <h2 key={index}>{element}</h2>
+  });
+  return <div className='App'>{foodsToDisplay}</div>
+}
+}
+export default Apps;
