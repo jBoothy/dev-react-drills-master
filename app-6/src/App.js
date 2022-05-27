@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Todo from "./Todo"
 
 class App extends Component{
 constructor(){
@@ -10,27 +11,42 @@ constructor(){
     userInput: '',
     listOfChores: []
   }
+  this.handleAddChore = this.handleAddChore.bind(this)
 }
 
-handleChange(input){
+handleInputChange(input){
   this.setState({ userInput: input })
 }
 
-pushChores(userInput){
-  let listOfChores = []
-  for(let i=0;i<userInput;i++){
-    listOfChores.push(userInput[i])
-  }
-  return listOfChores
+handleAddChore(){
+  this.setState({
+    listOfChores: [...this.state.listOfChores, this.state.userInput],
+    userInput: ''
+  })
 }
 
 render(){
-  return(
-    <div className='App'>
-      <h2>The Honey-do List</h2>
-      <input className='inputLine' onChange={(e)=>handleChange(e.target.value)}></input>
-      <button className='submitBtn' onClick={()=>this.state.userInput}>SUBMIT THAT ISH</button>
-      <span className='resultsBox'>Stuff you now have to do: {JSON.stringify(this.state.listOfChores, null, 10)}</span>
+  let list = this.state.listOfChores.map((element, index) => {
+    return <Todo key={index} task={element} />;
+  });
+
+  return (
+    <div className="App">
+      <h1>My to-do list:</h1>
+
+      <div>
+        <input
+          value={this.state.userInput}
+          placeholder="Enter new task"
+          onChange={e => this.handleInputChange(e.target.value)}
+        />
+
+        <button onClick={this.handleAddChore}>Add</button>
+      </div>
+
+      <br />
+
+      {list}
     </div>
   );
 }
